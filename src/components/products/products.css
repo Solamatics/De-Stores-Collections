@@ -41,18 +41,3 @@
 .product__price div {
   font-size: 2rem;
 }
-
-.button {
-  padding: 1rem;
-  border: 0.1rem #c0c0c0 solid;
-  background-color: #f0f0f0;
-  cursor: pointer;
-}
-
-.button:hover {
-  border: 0.1rem #808080 solid;
-}
-
-.button.primary {
-  background-color: #f0c040;
-}
