@@ -13,10 +13,13 @@ class ProductList extends React.Component {
       products: data.products,
       size: "",
       sort: "",
-      cartItems: [],
+      cartItems: localStorage.getItem("cartItems")
+        ? JSON.parse(localStorage.getItem("cartItems"))
+        : [],
     };
   }
 
+  //add item to cart
   addToCart = (product) => {
     const cartItems = this.state.cartItems.slice();
     let alreadyIncart = false;
@@ -31,16 +34,25 @@ class ProductList extends React.Component {
       cartItems.push({ ...product, count: 1 });
     }
     this.setState({ cartItems });
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   };
 
+  //remove item from cart
   removeItem = (product) => {
     const cartItems = this.state.cartItems.slice();
 
     this.setState({
       cartItems: cartItems.filter((cartItem) => cartItem._id !== product._id),
     });
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(
+        cartItems.filter((cartItem) => cartItem._id !== product._id)
+      )
+    );
   };
 
+  //sort product by prices
   sortProducts = (e) => {
     const sort = e.target.value;
     this.setState((state) => ({
@@ -63,6 +75,7 @@ class ProductList extends React.Component {
     }));
   };
 
+  //filter by sizes
   filterProducts = (e) => {
     if (e.target.value === "") {
       this.setState({
@@ -77,6 +90,11 @@ class ProductList extends React.Component {
         ),
       });
     }
+  };
+
+  //create order
+  createOrder = (order) => {
+    alert("Need to save order for " + order.name);
   };
 
   render() {
@@ -100,6 +118,7 @@ class ProductList extends React.Component {
             <Cart
               cartItems={this.state.cartItems}
               removeItem={this.removeItem}
+              createOrder={this.createOrder}
             />
           </div>
         </div>
